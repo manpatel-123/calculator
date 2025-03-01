@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Calculator Container */
+        .calculator {
+            background: #1e1e1e;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            padding: 20px;
+        }
+
+        /* Display */
+        .display {
+            background-color: #222;
+            color: #fff;
+            font-size: 36px;
+            text-align: right;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        /* Button Layout */
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        /* Default Button Style */
+        .buttons div {
+            background-color: #333;
+            color: #fff;
+            font-size: 24px;
+            height: 60px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Number Buttons (1-9, 0) - Same Color */
+        .buttons div.number {
+            background-color: #0277bd;
+        }
+
+        /* Operator Buttons and Special Buttons */
+        .buttons div.operator, .buttons div.clear, .buttons div.backspace, .buttons div.equal, .buttons div.decimal {
+            background-color: #f9a825;
+        }
+
+        .buttons div.operator:hover,
+        .buttons div.clear:hover,
+        .buttons div.backspace:hover,
+        .buttons div.equal:hover,
+        .buttons div.decimal:hover {
+            background-color: #f57f17;
+        }
+
+        /* Special Hover Effects */
+        .buttons div:hover {
+            background-color: #555;
+        }
+
+        .equal {
+            background-color: #388e3c;
+            grid-column: span 2;
+        }
+
+        .equal:hover {
+            background-color: #2c6e2f;
+        }
+
+        .clear {
+            background-color: #d32f2f;
+            grid-column: span 2;
+        }
+
+        .clear:hover {
+            background-color: #c62828;
+        }
+
+        .backspace {
+            background-color: #0288d1;
+            color: white;
+        }
+
+        .backspace:hover {
+            background-color: #0277bd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <h1>MAN</h1>
+    <!-- Display screen -->
+    <input type="text" id="display" class="display" readonly>
+
+    <!-- Buttons -->
+    <div class="buttons">
+        <div class="clear">C</div>
+        <div class="backspace">⌫</div>
+        <div class="operator">/</div>
+        <div class="operator">*</div>
+
+        <div class="number">7</div>
+        <div class="number">8</div>
+        <div class="number">9</div>
+        <div class="operator">+</div>
+
+        <div class="number">4</div>
+        <div class="number">5</div>
+        <div class="number">6</div>
+        <div class="operator">-</div>
+
+        <div class="number">1</div>
+        <div class="number">2</div>
+        <div class="number">3</div>
+        <div class="equal">=</div>
+
+        <div class="number">0</div>
+        <div class="decimal">.</div>
+    </div>
+</div>
+
+<script>
+    let display = document.getElementById("display");
+    let buttons = document.querySelectorAll(".buttons div");
+
+    let currentInput = "";
+
+    buttons.forEach(button => {
+        button.addEventListener("click", function () {
+            let buttonText = this.innerText;
+
+            // Handle different button types
+            if (buttonText === "C") {
+                currentInput = "";
+            } else if (buttonText === "⌫") {
+                currentInput = currentInput.slice(0, -1); // Backspace (remove last character)
+            } else if (buttonText === "=") {
+                try {
+                    currentInput = eval(currentInput).toString(); // Evaluate the expression
+                } catch (error) {
+                    currentInput = "Error";
+                }
+            } else {
+                currentInput += buttonText; // Add number/operator to current input
+            }
+
+            display.value = currentInput; // Update display
+        });
+    });
+</script>
+
+</body>
+</html>
